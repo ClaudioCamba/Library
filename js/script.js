@@ -1,11 +1,20 @@
-function Book(title, author, pages, read) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.read = read
-    this.info = function () {
-        return title + ' by ' + author + ', ' + pages + ' pages, ' + read;
+let myLibrary = ['book1', 'book2', 'book3'],
+    bookShelf = document.querySelector('.lib-container');
+
+function Book() {
+
+}
+
+function addBooktoLibrary(book) {
+    // myLibrary.push(book);
+    // console.log(myLibrary);
+}
+
+function addBooksToPage() {
+    for (const book of myLibrary) {
+        const listElement = document.createElement("li");
+        listElement.innerText = book;
+        bookShelf.appendChild(listElement);
     }
 }
 
-const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, 'not read yet');
