@@ -136,6 +136,7 @@ html body * {
 }
 
 /* Main CSS */
+
 body {
   text-align: center;
 }
@@ -154,4 +155,24 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+}
+
+/* Modal */
+
+.modal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  width: 90vw;
+  padding: 25px;
+  background-color: #ffffff;
 }
