@@ -160,19 +160,48 @@ body {
 /* Modal */
 
 .modal {
+  display: none;
   position: absolute;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.showModal .modal {
+  display: flex;
+}
+
+.closeModal {
+  width: max-content;
+  height: max-content;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
 .modal-content {
-  width: 90vw;
-  padding: 25px;
+  display: grid;
+  gap: 20px;
+  grid-auto-rows: 30px;
+  align-content: center;
+  width: 70vw;
+  padding: 40px 30px 30px;
   background-color: #ffffff;
+  position: relative;
+}
+
+.modal-content label {
+  display: grid;
+  grid-template-columns: 80px 3fr;
+  align-items: center;
+  text-align: right;
+}
+
+input[type="text"] {
+  height: 100%;
+  margin-left: 30px;
 }

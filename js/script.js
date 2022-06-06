@@ -1,5 +1,16 @@
 let myLibrary = ['book1', 'book2', 'book3'],
-    bookShelf = document.querySelector('.lib-container');
+    bookShelf = document.querySelector('.lib-container'),
+    bodyElem = document.querySelector('body'),
+    addBook = document.querySelector('.addBook');
+
+// Hide / Show Modal
+function hideShowModal() {
+    if (bodyElem.classList.contains('showModal')) {
+        bodyElem.classList.remove('showModal');
+    } else {
+        bodyElem.classList.add('showModal');
+    }
+}
 
 function Book() {
 
