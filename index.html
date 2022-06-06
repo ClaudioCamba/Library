@@ -29,13 +29,13 @@
 
         <h3>New Book</h3>
 
-        <label for="author">Author <input id="author" type="text" /></label>
         <label for="title">Title <input id="title" type="text" /></label>
+        <label for="author">Author <input id="author" type="text" /></label>
         <label for="pages">N# Pages <input id="pages" type="text" /></label>
         <label for="read">Read? <input id="read" type="text" /></label>
 
         <input
-          onClick="hideShowModal()"
+          onClick="addBooktoLibrary();hideShowModal()"
           class="addBook"
           type="button"
           value="Add Book"
