@@ -1,3 +1,4 @@
+// All main variables
 let myLibrary = [],
     bookShelf = document.querySelector('.lib-container'),
     bodyElem = document.querySelector('body'),
@@ -15,7 +16,7 @@ function hideShowModal() {
     }
 }
 
-// Check if book exists within library and return array position
+// Return book array position in library
 function checkLibrary(title) {
     for (var i = 0; i < myLibrary.length; i++) {
         if (myLibrary[i].title === title) {
@@ -56,13 +57,6 @@ function addBooktoLibrary() {
     let book = new Book(formTitle.value, formAuthor.value, formPages.value, formRead.value);
     myLibrary.unshift(book); // Add book to Array
     book.createCard(); // Add book to page
-
-    // book.createCard();
-    // for (const book of myLibrary) {
-    //     const listElement = document.createElement("li");
-    //     listElement.innerText = book;
-    //     bookShelf.appendChild(listElement);
-    // }
 }
 
 function removeBook(elem) {
@@ -78,9 +72,14 @@ function removeBook(elem) {
     }
 }
 
-console.log('live')
+// First test book
+function firstBook() {
+    let book = new Book('First Book', 'Unknown', 250, 'No');
+    myLibrary.unshift(book);
+    book.createCard();
+}
+firstBook();
 // IMPROVEMENTS ============================================
-// Change pages to numbers and read into radio
 // Clear form input values
 // Check if book already exists
 // Only add if sections have been filled
