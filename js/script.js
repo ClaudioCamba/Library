@@ -15,6 +15,15 @@ function hideShowModal() {
     }
 }
 
+// Check if book exists within library and return array position
+function checkLibrary(title) {
+    for (var i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].title === title) {
+            return i;
+        }
+    }
+}
+
 // Encode characters
 function encodeHTML(s) {
     return s.split('&').join('&amp;').split('<').join('&lt;').split('"').join('&quot;').split("'").join('&#39;');
@@ -23,8 +32,6 @@ function encodeHTML(s) {
 function decodeHTML(s) {
     return s.split('&amp;').join('&').split('&lt;').join('<').split('&quot;').join('"').split('&#39;').join("'");
 }
-
-
 
 // Book Function
 function Book(title, author, pages, read) {
@@ -40,16 +47,16 @@ Book.prototype.createCard = function () {
     listElem.innerHTML += '<p>' + this.author + '</p>';
     listElem.innerHTML += '<p>' + this.pages + '</p>';
     listElem.innerHTML += '<p>' + this.read + '</p>';
+    listElem.innerHTML += '<input type="button" onClick="removeBook(this)" value="X">';
     listElem.setAttribute('data-title', encodeHTML(this.title));
     bookShelf.prepend(listElem);
 }
 
 function addBooktoLibrary() {
-
     let book = new Book(formTitle.value, formAuthor.value, formPages.value, formRead.value);
-
-    myLibrary.push(book); // Add book to Array
+    myLibrary.unshift(book); // Add book to Array
     book.createCard(); // Add book to page
+
     // book.createCard();
     // for (const book of myLibrary) {
     //     const listElement = document.createElement("li");
@@ -58,20 +65,20 @@ function addBooktoLibrary() {
     // }
 }
 
-// function showBooksOnPage() {
-//     for (const book of myLibrary) {
-//         book.createCard();
-//     }
-// }
+function removeBook(elem) {
+    let parent = elem.parentElement,
+        bookTitle = decodeHTML(parent.attributes['data-title'].value),
+        position = checkLibrary(bookTitle);
 
-// function checkLibrary() {
+    if (position > -1) {
+        parent.remove();
+        myLibrary.splice(position, 1);
+    } else {
+        console.log('BOOK NOT FOUND');
+    }
+}
 
-// }
-
-// let test = document.querySelectorAll('.lib-container li h4')
-
-
-
+console.log('live')
 // IMPROVEMENTS ============================================
 // Change pages to numbers and read into radio
 // Clear form input values

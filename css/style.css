@@ -156,6 +156,13 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+  position: relative;
+}
+
+.lib-container li input[type="button"] {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 /* Modal */
