@@ -52,10 +52,10 @@ function readToggle(status) {
 // Storing element creation function within prototype
 Book.prototype.createCard = function () {
     const listElem = document.createElement("li");
-    listElem.innerHTML = '<h4>' + this.title + '</h4>';
-    listElem.innerHTML += '<p>' + this.author + '</p>';
-    listElem.innerHTML += '<p>' + this.pages + '</p>';
-    listElem.innerHTML += '<p class="readBook">' + this.read + '</p>';
+    listElem.innerHTML = '<h4>Title: ' + this.title + '</h4>';
+    listElem.innerHTML += '<p>Author: ' + this.author + '</p>';
+    listElem.innerHTML += '<p>Pages: ' + this.pages + '</p>';
+    listElem.innerHTML += '<p class="readBook">Status: ' + this.read + '</p>';
     listElem.innerHTML += '<input class="closeBtn" type="button" onClick="removeBook(this)" value="X">';
 
 
@@ -108,3 +108,4 @@ firstBook();
 // Check if book already exists
 // Only add if sections have been filled
 // Move read/unread toggle function into prototype 
+// Add style, color and design
