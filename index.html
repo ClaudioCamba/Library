@@ -29,10 +29,23 @@
 
         <h3>New Book</h3>
 
-        <label for="title">Title <input id="title" type="text" /></label>
-        <label for="author">Author <input id="author" type="text" /></label>
-        <label for="pages">N# Pages <input id="pages" type="text" /></label>
-        <label for="read">Read? <input id="read" type="text" /></label>
+        <label for="title"
+          >What's the book title?<input id="title" type="text"
+        /></label>
+        <label for="author"
+          >Who is the Author?<input id="author" type="text"
+        /></label>
+        <label for="pages"
+          >How many pages? <input id="pages" type="number"
+        /></label>
+        <label for="read"
+          >Have you read it?
+          <select name="cars" id="read">
+            <option value="">--Please choose an option--</option>
+            <option value="yes">Yes I have read this book</option>
+            <option value="no">No I haven't read this book</option>
+          </select>
+        </label>
 
         <input
           onClick="addBooktoLibrary();hideShowModal()"
