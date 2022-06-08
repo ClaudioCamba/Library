@@ -159,10 +159,16 @@ body {
   position: relative;
 }
 
-.lib-container li input[type="button"] {
+.closeBtn,
+.readBtn {
   position: absolute;
-  right: 0;
   top: 0;
+}
+.readBtn {
+  left: 0;
+}
+.closeBtn {
+  right: 0;
 }
 
 /* Modal */
