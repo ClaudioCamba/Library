@@ -25,6 +25,13 @@ function checkLibrary(title) {
     }
 }
 
+// Set multiple attributes
+function setAttributes(el, attrs) {
+    for (var key in attrs) {
+        el.setAttribute(key, attrs[key]);
+    }
+}
+
 // Encode characters
 function encodeHTML(s) {
     return s.split('&').join('&amp;').split('<').join('&lt;').split('"').join('&quot;').split("'").join('&#39;');
@@ -35,18 +42,18 @@ function decodeHTML(s) {
     return s.split('&amp;').join('&').split('&lt;').join('<').split('&quot;').join('"').split('&#39;').join("'");
 }
 
+// Read toggle
+function readToggle(status) {
+    let x = status === 'Read' ? 'Unread' : 'Read';
+    return x;
+}
+
 // Book Function
 function Book(title, author, pages, read) {
     this.title = title
     this.author = author
     this.pages = pages
     this.read = read
-}
-
-// Read toggle
-function readToggle(status) {
-    let x = status === 'Read' ? 'Unread' : 'Read';
-    return x;
 }
 
 // Storing element creation function within prototype
@@ -58,11 +65,25 @@ Book.prototype.createCard = function () {
     listElem.innerHTML += '<p class="readBook">Status: ' + this.read + '</p>';
     listElem.innerHTML += '<input class="closeBtn" type="button" onClick="removeBook(this)" value="X">';
 
+    // Read Button w/ update function
+    let readButton = document.createElement('input');
+    readButton.setAttribute('type', 'button');
+    readButton.setAttribute('class', 'readBtn');
+    readButton.setAttribute('value', readToggle(this.read));
+    readButton.addEventListener('click', function () {
+        myLibrary[checkLibrary(decodeHTML(this.parentElement.attributes['data-title'].value))].readUpdate();
+    });
 
-    listElem.innerHTML += '<input class="readBtn" type="button" onClick="readBook(this)" value="' + readToggle(this.read) + '">';
-
+    listElem.appendChild(readButton);
     listElem.setAttribute('data-title', encodeHTML(this.title));
     bookShelf.prepend(listElem);
+}
+
+// Toggle read / unread
+Book.prototype.readUpdate = function () {
+    this.read = readToggle(this.read);
+    document.querySelector('[data-title="' + encodeHTML(this.title) + '"] .readBook').innerText = 'Status: ' + this.read;
+    document.querySelector('[data-title="' + encodeHTML(this.title) + '"] .readBtn').value = readToggle(this.read);
 }
 
 // Add book to page and library array
@@ -72,20 +93,10 @@ function addBooktoLibrary() {
     book.createCard(); // Add book to page
 }
 
-// Toggle read / unread
-function readBook(elem) {
-    let pos = checkLibrary(decodeHTML(elem.parentElement.attributes['data-title'].value)); // Find book array position
-
-    myLibrary[pos].read = readToggle(myLibrary[pos].read); // Update array
-    elem.parentElement.querySelector('.readBook').innerText = myLibrary[pos].read;  // Update status text
-    elem.value = readToggle(elem.value); // Update button text
-}
-
 // Remove book from page and library array
 function removeBook(elem) {
     let parent = elem.parentElement,
-        bookTitle = decodeHTML(parent.attributes['data-title'].value),
-        position = checkLibrary(bookTitle);
+        position = checkLibrary(decodeHTML(parent.attributes['data-title'].value));
 
     if (position > -1) {
         parent.remove();
@@ -97,15 +108,36 @@ function removeBook(elem) {
 
 // First test book
 function firstBook() {
-    let book = new Book('First Book', 'Unknown', 250, 'Unread');
-    myLibrary.unshift(book);
-    book.createCard();
+    Firstbooks = [
+        {
+            title: 'First Book',
+            author: 'Unknown',
+            pages: 250,
+            read: 'Unread'
+        }, {
+            title: 'Second Book40',
+            author: 'Unknown',
+            pages: 220,
+            read: 'Read'
+        }, {
+            title: 'Second Book42',
+            author: 'Known',
+            pages: 240,
+            read: 'Unread'
+        }
+    ];
+
+    for (const chosen of Firstbooks) {
+        let book = new Book(chosen.title, chosen.author, chosen.pages, chosen.read);
+        myLibrary.unshift(book);
+        book.createCard();
+    }
 }
 firstBook();
 
 // IMPROVEMENTS ============================================
 // Clear form input values
 // Check if book already exists
-// Only add if sections have been filled
+// Only add book if sections have been filled
 // Move read/unread toggle function into prototype 
 // Add style, color and design
