@@ -25,13 +25,6 @@ function checkLibrary(title) {
     }
 }
 
-// Set multiple attributes
-function setAttributes(el, attrs) {
-    for (var key in attrs) {
-        el.setAttribute(key, attrs[key]);
-    }
-}
-
 // Encode characters
 function encodeHTML(s) {
     return s.split('&').join('&amp;').split('<').join('&lt;').split('"').join('&quot;').split("'").join('&#39;');
@@ -139,5 +132,4 @@ firstBook();
 // Clear form input values
 // Check if book already exists
 // Only add book if sections have been filled
-// Move read/unread toggle function into prototype 
 // Add style, color and design
