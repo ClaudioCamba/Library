@@ -1,5 +1,6 @@
 const library = (() => {
     const _libraryArray = [],
+        modalBtn = document.querySelectorAll('.newBook, .closeModal, .addBook'),
         bookShelf = document.querySelector('.lib-container'),
         bodyElem = document.querySelector('body'),
         formTitle = document.querySelector('#title'),
@@ -9,21 +10,21 @@ const library = (() => {
         addBookBtn = document.querySelector('.addBook');
     let newBook = null;
 
-    addBookBtn.addEventListener('click', (e) => addBook(formTitle.value, formAuthor.value, formPages.value, formRead.value));
+    addBookBtn.addEventListener('click', () => addBook(formTitle.value, formAuthor.value, formPages.value, formRead.value));
+    modalBtn.forEach((btn) => btn.addEventListener('click', () => { modalToggle() }));
 
     const addBook = (title, author, pages, value) => {
-        _libraryArray.push(newBook = new Books(title, author, pages, value));
-        // _libraryArray.forEach((item, index) => item.id = index)
-        bookShelf.appendChild(newBook.bookElem());
+        if (_libraryArray.every(function (book) { return book.title !== title; })) { // Check each title against new book title (prevent duplicates)
+            _libraryArray.push(newBook = new Books(title, author, pages, value));
+            bookShelf.appendChild(newBook.bookElem());
+        };
     }
 
+    const modalToggle = () => bodyElem.classList.contains('showModal') === true ? bodyElem.classList.remove('showModal') : bodyElem.classList.add('showModal');
     const getLibrary = () => _libraryArray;
+    const removeBook = (e) => { _libraryArray.splice(_libraryArray.indexOf(e), 1); };
 
-    const removeBook = (e) => _libraryArray.splice(_libraryArray.indexOf(e), 1);
-
-    // const setLibrary = (a) => _libraryArray.push(a);
-
-    return { getLibrary, removeBook };
+    return { getLibrary, removeBook, addBook };
 })();
 
 
@@ -34,67 +35,66 @@ class Books {
         this.author = author;
         this.pages = pages;
         this.read = read;
+        this.elem = null;
+        this.object = this;
     }
 
-    remove() { library.removeBook(this); }
-
-    bookElem(elem, closeBtn, readBtn) {
+    bookElem(elem, closeBtn, readBtn, object) {
         elem = document.createElement("li");
         closeBtn = document.createElement('input');
         readBtn = document.createElement('input');
-        elem.id = this.id;
         elem.innerHTML = '<h4>Title: ' + this.title + '</h4>';
         elem.innerHTML += '<p>Author: ' + this.author + '</p>';
         elem.innerHTML += '<p>Pages: ' + this.pages + '</p>';
         elem.innerHTML += '<p class="readBook">Status: ' + this.read + '</p>';
         closeBtn.classList.add('closeBtn');
-        closeBtn.type = 'button';
-        closeBtn.value = 'X';
-        readBtn.type = 'button';
         readBtn.classList.add('readBtn');
+        closeBtn.type = 'button';
+        readBtn.type = 'button';
+        closeBtn.value = 'X';
         readBtn.value = this.read;
+        elem.appendChild(readBtn);
+        elem.appendChild(closeBtn);
+        this.elem = elem;
+        object = this.object;
 
-
+        console.log(this.elem)
         readBtn.addEventListener('click', function (e) {
-            console.log(e.target)
+            console.log('toggle read')
         });
 
         closeBtn.addEventListener('click', function (e) {
+            library.removeBook(object);
             e.target.parentElement.remove();
         });
 
-
-        elem.appendChild(readBtn);
-        elem.appendChild(closeBtn);
-        return elem;
+        return this.elem;
     }
 }
 
 
 // method to update read / unread
-// method to remove book from page
-// add book to library array
-//
+// 
 
 
 
 // All main variables
-let myLibrary = [],
-    bookShelf = document.querySelector('.lib-container'),
-    bodyElem = document.querySelector('body'),
-    formTitle = document.querySelector('#title'),
-    formAuthor = document.querySelector('#author'),
-    formPages = document.querySelector('#pages'),
-    formRead = document.querySelector('#read');
+// let myLibrary = [],
+//     bookShelf = document.querySelector('.lib-container'),
+//     bodyElem = document.querySelector('body'),
+//     formTitle = document.querySelector('#title'),
+//     formAuthor = document.querySelector('#author'),
+//     formPages = document.querySelector('#pages'),
+//     formRead = document.querySelector('#read');
 
 // Hide / Show Modal
-function hideShowModal() {
-    if (bodyElem.classList.contains('showModal')) {
-        bodyElem.classList.remove('showModal');
-    } else {
-        bodyElem.classList.add('showModal');
-    }
-}
+// function hideShowModal() {
+//     if (bodyElem.classList.contains('showModal')) {
+//         bodyElem.classList.remove('showModal');
+//     } else {
+//         bodyElem.classList.add('showModal');
+//     }
+// }
 
 // Return book array position in library
 // function checkLibrary(title) {
